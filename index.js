@@ -8,6 +8,7 @@ const { MongoClient } = require('mongodb');
 const port=process.env.PORT || 5001 
 
 const doctor = require('./routers/doctorRouter'); 
+const nurse =require('./routers/nurseRouter')
 
 const uri = `mongodb+srv://Hospital_Project:EuqASExlGld6YoTd@cluster0.kvzsn.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -94,6 +95,7 @@ app.use(express.json());
 
 
 app.use(doctor)
+app.use(nurse)
 
   
 app.listen(port, () => { 

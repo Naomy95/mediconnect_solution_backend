@@ -7,16 +7,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect();
 
 
-
-
 const database = client.db('hospital_project');
-const doctorsCollection = database.collection('doctors_list');
-
-
+const nursesCollection = database.collection('nurses_list');
 
 
 exports.read = async (req, res) => { 
-    const cursor = doctorsCollection.find({});
+    const cursor = nursesCollection.find({});
     const users = await cursor.toArray();
     res.setHeader('Access-Control-Allow-Origin','*')
 res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -33,7 +29,7 @@ res.setHeader('Access-Control-Allow-Credentials', true);
 exports.create = async (req, res) => { 
     try {
         const doctor = req.body;
-        const result = await doctorsCollection.insertOne(doctor);
+        const result = await nursesCollection.insertOne(doctor);
         res.json(result);
     } catch(err){
         console.log(err)
@@ -45,12 +41,12 @@ exports.create = async (req, res) => {
 
 exports.update= async (req, res) => {
     const user = req.body;
-    const userId = user.doctor_id
-    console.log(userId)
+    const userId = user.nurse_id
+    console.log(user)
    
     try {
-        const result = await doctorsCollection.findOneAndUpdate(
-            { doctor_id: userId },  // Match the document with the doctor_id
+        const result = await nursesCollection.findOneAndUpdate(
+            { nurse_id: userId },  // Match the document with the doctor_id
             { $set: user },    // Set the new data
             { returnOriginal: false } // Return the updated document
         );
