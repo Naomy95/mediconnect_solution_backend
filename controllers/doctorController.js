@@ -35,6 +35,7 @@ exports.create = async (req, res) => {
         const doctor = req.body;
         const result = await doctorsCollection.insertOne(doctor);
         res.json(result);
+        console.log(result)
     } catch(err){
         console.log(err)
         res.status(400).json({
@@ -55,6 +56,7 @@ exports.update= async (req, res) => {
             { returnOriginal: false } // Return the updated document
         );
         res.json(result)
+        console.log(req.body)
     }
     catch (err) {
         console.log(err)
@@ -64,3 +66,31 @@ exports.update= async (req, res) => {
 
     console.log(user)
 }
+exports.remove= async (req, res) => {
+    const user = req.params.doctorId;
+    const filter={_id: new ObjectId(user)}
+    console.log(filter)
+   
+    try {
+        const result = await doctorsCollection.deleteOne(filter);
+        res.json(result)
+        // console.log(result)
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'An error occurred while updating the user' });
+    }
+
+
+    // console.log(user)
+}
+
+// app.delete('/seats/:id', async (req, res) => {
+//     const id = req.params.id;
+//     console.log(id);
+//     const query = { _id:new ObjectId(id) };
+//     console.log(query);
+//     const result = await seatCollection.deleteOne(query);
+//     console.log(result);
+//     res.json(result);
+// })

@@ -5,10 +5,13 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 // const cryptoRandomString = require('crypto-random-string');
 const { MongoClient } = require('mongodb');
-const port=process.env.PORT || 5001 
+const port=process.env.PORT || 4000
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 const doctor = require('./routers/doctorRouter'); 
 const nurse =require('./routers/nurseRouter')
+const admin =require('./routers/adminLoginRouter')
 
 const uri = `mongodb+srv://Hospital_Project:EuqASExlGld6YoTd@cluster0.kvzsn.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -86,7 +89,7 @@ const transporter = nodemailer.createTransport({
 
 const app = express(); 
 
-
+app.use(bodyParser.json())
 
 app.use(cors(
    corsOptions
@@ -96,6 +99,7 @@ app.use(express.json());
 
 app.use(doctor)
 app.use(nurse)
+app.use(admin)
 
   
 app.listen(port, () => { 

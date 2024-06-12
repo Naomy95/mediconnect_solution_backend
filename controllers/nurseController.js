@@ -60,3 +60,22 @@ exports.update= async (req, res) => {
 
     console.log(user)
 }
+
+exports.remove= async (req, res) => {
+    const user = req.params.nurseId;
+    const filter={_id: new ObjectId(user)}
+    console.log(filter)
+   
+    try {
+        const result = await nursesCollection.deleteOne(filter);
+        res.json(result)
+        // console.log(result)
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'An error occurred while updating the user' });
+    }
+
+
+    // console.log(user)
+}
